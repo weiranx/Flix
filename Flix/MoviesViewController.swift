@@ -30,7 +30,6 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let posterPath = movie["poster_path"] as! String
         let posterUrl = URL(string: baseUrl + posterPath)
         
-        
         cell.movieImageView.af_setImage(withURL: posterUrl!)
         
         return cell
@@ -71,6 +70,19 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
         task.resume()
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let movie = movies[indexPath.row]
+        
+        let detailsViewController = segue.destination as! MovieDetailsViewController
+        detailsViewController.movie = movie
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
 
